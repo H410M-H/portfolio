@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import ProjectCard from "@/components/project-card"
 import { motion } from "framer-motion"
 import { Stars } from "@react-three/drei"
@@ -6,7 +5,7 @@ import { Canvas } from "@react-three/fiber"
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
+    <section id="projects" className="py-10 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10 opacity-10">
         <Canvas>
@@ -69,19 +68,6 @@ export default function ProjectsSection() {
             />
           </motion.div>
         </div>
-
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-        >
-          <Button 
-            size="lg"
-            className="bg-gradient-to-r from-primary to-purple-500 hover:from-primary/90 hover:to-purple-500/90 text-white px-8 py-6 rounded-xl"
-          >
-            Explore Full Portfolio
-          </Button>
-        </motion.div>
       </div>
     </section>
   )

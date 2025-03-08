@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Canvas } from "@react-three/fiber"
 import { Float, Environment, OrbitControls } from "@react-three/drei"
 import Image from "next/image"
@@ -95,12 +94,12 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <Button 
+            {/* <Button 
               className="mt-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
               size="lg"
             >
               Download Resume
-            </Button>
+            </Button> */}
           </motion.div>
         </div>
       </div>

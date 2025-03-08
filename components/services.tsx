@@ -97,14 +97,23 @@ export default function ServicesSection() {
     visible: { y: 0, opacity: 1 }
   }
 
+  const badgeColors = [
+    'from-primary to-purple-500',
+    'from-cyan-400 to-blue-500',
+    'from-green-400 to-emerald-500'
+  ]
+
   return (
-    <section id="services" className="py-20 bg-background/80 backdrop-blur-md">
+    <section id="services" className="py-20 backdrop-blur-md relative overflow-hidden">
+      {/* Gradient background overlay */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 to-purple-500/10 opacity-20" />
+
       <div className="container">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-4xl font-bold mb-16 text-center bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent"
+          className="text-3xl md:text-4xl font-bold mb-12 md:mb-16 text-center bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent"
         >
           Professional Services
         </motion.h2>
@@ -114,78 +123,82 @@ export default function ServicesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
         >
           {services.map((service, index) => (
             <motion.div key={index} variants={itemVariants}>
-              <Card className="glass-panel h-full flex flex-col border-white/10 hover:border-primary/30 transition-all group hover:shadow-xl">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                  <div className="p-4 bg-primary/10 rounded-2xl">
-  {React.cloneElement(service.icon as React.ReactElement<{ className?: string }>, { 
-    className: "h-8 w-8 text-primary transition-transform group-hover:scale-110" 
-  })}
-</div>
+              <Card className="glass-panel h-full flex flex-col border-white/20 hover:border-primary/40 transition-all group hover:shadow-lg">
+                <CardHeader className="p-4 md:p-6">
+                  <div className="flex justify-center mb-3 md:mb-4">
+                    <div className="p-3 md:p-4 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-xl backdrop-blur-sm">
+                      {React.cloneElement(service.icon as React.ReactElement<{ className?: string }>, {
+                        className: "h-6 w-6 md:h-8 md:w-8 text-primary transition-transform group-hover:scale-110"
+                      })}
+                    </div>
                   </div>
-                  <CardTitle className="text-center text-2xl">{service.title}</CardTitle>
-                  <p className="text-muted-foreground text-center mt-2">{service.description}</p>
+                  <CardTitle className="text-xl md:text-2xl text-center font-semibold">
+                    {service.title}
+                  </CardTitle>
+                  <p className="text-muted-foreground text-sm md:text-base text-center mt-2">
+                    {service.description}
+                  </p>
                 </CardHeader>
-                <CardContent className="flex-grow">
-                  <div className="flex flex-wrap gap-2 justify-center mt-4">
+                
+                <CardContent className="flex-grow p-4 md:p-6 pt-0">
+                  <div className="flex flex-wrap gap-2 justify-center">
                     {service.features.map((feature, i) => (
-                      <Badge 
-                        key={i} 
+                      <Badge
+                        key={i}
                         variant="outline"
-                        className="bg-primary/5 text-primary border-primary/10 hover:bg-primary/10"
+                        className={`text-xs md:text-sm font-medium bg-gradient-to-br ${badgeColors[i % 3]} bg-clip-text text-transparent border-white/20 hover:border-primary/40`}
                       >
                         {feature}
                       </Badge>
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter className="pt-0 flex justify-center">
+                
+                <CardFooter className="p-4 md:p-6 pt-0">
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button 
-                        variant="ghost" 
-                        className="gap-1 text-primary hover:bg-primary/10"
+                      <Button
+                        variant="ghost"
+                        className="w-full gap-2 text-primary hover:bg-primary/10 text-sm md:text-base"
                         onClick={() => setSelectedService(service)}
                       >
                         Explore Details
                         <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl glass-panel border-white/10">
+                    <DialogContent className="max-w-[95vw] md:max-w-2xl border-white/20 backdrop-blur-xl">
                       <DialogHeader>
-                        <div className="flex items-center gap-4 mb-6">
-                          <div className="p-3 bg-primary/10 rounded-xl">
+                        <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
+                          <div className="p-3 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-xl">
                             {selectedService?.icon}
                           </div>
-                          <DialogTitle className="text-3xl">{selectedService?.title}</DialogTitle>
+                          <DialogTitle className="text-2xl md:text-3xl text-center md:text-left bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                            {selectedService?.title}
+                          </DialogTitle>
                         </div>
                       </DialogHeader>
-                      <div className="space-y-6">
-                        <p className="text-muted-foreground leading-relaxed">
+                      
+                      <div className="space-y-6 text-sm md:text-base">
+                        <p className="text-foreground leading-relaxed">
                           {selectedService?.detailedDescription}
                         </p>
-                        <div className="border-t border-white/10 pt-6">
+                        
+                        <div className="border-t border-white/20 pt-6">
                           <h4 className="font-semibold text-lg mb-4">Key Features</h4>
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             {selectedService?.features.map((feature, i) => (
                               <div key={i} className="flex items-start gap-3">
                                 <div className="p-1.5 bg-primary/10 rounded-lg mt-0.5">
                                   <ChevronRight className="h-4 w-4 text-primary" />
                                 </div>
-                                <span className="text-sm">{feature}</span>
+                                <span className="flex-1">{feature}</span>
                               </div>
                             ))}
                           </div>
-                        </div>
-                        <div className="flex justify-end gap-3 pt-6">
-                          <Button variant="outline">View Portfolio</Button>
-                          <Button className="bg-primary/90 hover:bg-primary">
-                            Start Project
-                          </Button>
                         </div>
                       </div>
                     </DialogContent>

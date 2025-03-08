@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail, MessageCircle, Instagram } from "lucide-react"
 import Link from "next/link"
 
 interface HeroSectionProps {
@@ -23,16 +23,28 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
           </Button>
         </div>
         <div className="flex justify-center mt-8 space-x-6">
-          <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
+          <Link href="https://github.com/H410M-H" target="_blank" rel="noopener noreferrer">
             <Button variant="ghost" size="icon">
               <Github className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </Button>
           </Link>
-          <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <Link href="https://linkedin.com/in/hassaan-chouhan-53646a32a" target="_blank" rel="noopener noreferrer">
             <Button variant="ghost" size="icon">
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
+            </Button>
+          </Link>
+          <Link href="https://wa.me/923016233609" target="_blank" rel="noopener noreferrer">
+            <Button variant="ghost" size="icon">
+              <MessageCircle className="h-5 w-5" />
+              <span className="sr-only">WhatsApp</span>
+            </Button>
+          </Link>
+          <Link href="https://instagram.com/hassaaan.74" target="_blank" rel="noopener noreferrer">
+            <Button variant="ghost" size="icon">
+              <Instagram className="h-5 w-5" />
+              <span className="sr-only">Instagram</span>
             </Button>
           </Link>
           <Link href="mailto:hassaanazam7@gmail.com">
@@ -46,4 +58,3 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
     </section>
   )
 }
-

@@ -125,16 +125,16 @@ export default function Home() {
         </motion.section>
         
         <motion.section
-          ref={sectionRefs.about}
-          id="about"
+          ref={sectionRefs.education}
+          id="education"
           className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
         >
           <EducationSection />
         </motion.section>
 
         <motion.section
-          ref={sectionRefs.about}
-          id="about"
+          ref={sectionRefs.services}
+          id="services"
           className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
         >
           <ServicesSection />

@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
 import { Code, Database, Layout, LineChart, Cloud, Shield, Smartphone, Cpu } from "lucide-react"
+import React from "react"
 
 interface SkillArea {
   title: string
@@ -82,30 +83,39 @@ export default function SkillsSection() {
     visible: { y: 0, opacity: 1 }
   }
 
+  const badgeColors = [
+    'from-primary to-purple-500',
+    'from-cyan-400 to-blue-500',
+    'from-green-400 to-emerald-500'
+  ]
+
   return (
-    <section id="skills" className="py-20 bg-background/80 backdrop-blur-md">
+    <section id="skills" className="py-20 bg-background/90 backdrop-blur-md relative">
+      {/* Gradient background overlay */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 to-purple-500/10 opacity-15" />
+
       <div className="container">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-4xl font-bold mb-16 text-center bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent"
+          className="text-4xl font-bold mb-16 text-center bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent"
         >
           Technical Expertise
         </motion.h2>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <div className="flex justify-center mb-12">
-            <TabsList className="glass-panel p-2 rounded-2xl backdrop-blur-lg border border-white/10">
-              <TabsTrigger 
-                value="development" 
-                className="px-6 py-2 rounded-xl data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+            <TabsList className="glass-panel p-1 rounded-2xl backdrop-blur-lg border border-white/20">
+              <TabsTrigger
+                value="development"
+                className="px-6 py-2 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary/80 data-[state=active]:to-purple-500/80 data-[state=active]:text-white"
               >
                 Development
               </TabsTrigger>
-              <TabsTrigger 
-                value="specialized" 
-                className="px-6 py-2 rounded-xl data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+              <TabsTrigger
+                value="specialized"
+                className="px-6 py-2 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-400/80 data-[state=active]:to-blue-500/80 data-[state=active]:text-white"
               >
                 Specialized
               </TabsTrigger>
@@ -122,14 +132,18 @@ export default function SkillsSection() {
                 <div className="grid lg:grid-cols-2 gap-6">
                   {areas.map((area, index) => (
                     <motion.div key={index} variants={itemVariants}>
-                      <Card className="glass-panel border-white/10 hover:border-primary/30 transition-all">
+                      <Card className="glass-panel border-white/20 hover:border-primary/40 transition-all group hover:shadow-xl">
                         <CardHeader className="pb-4">
                           <div className="flex items-start gap-4">
-                            <div className="p-3 bg-primary/10 rounded-xl">
-                              {area.icon}
+                            <div className="p-4 bg-primary/10 rounded-2xl">
+                              {React.cloneElement(area.icon as React.ReactElement<{ className?: string }>, {
+                                className: "h-8 w-8 text-primary transition-transform group-hover:scale-110"
+                              })}
                             </div>
                             <div>
-                              <CardTitle className="text-2xl">{area.title}</CardTitle>
+                              <CardTitle className="text-2xl bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                                {area.title}
+                              </CardTitle>
                               <p className="text-muted-foreground mt-2">{area.description}</p>
                             </div>
                           </div>
@@ -137,10 +151,10 @@ export default function SkillsSection() {
                         <CardContent>
                           <div className="flex flex-wrap gap-2">
                             {area.skills.map((skill, i) => (
-                              <Badge 
-                                key={i} 
+                              <Badge
+                                key={i}
                                 variant="outline"
-                                className="bg-primary/5 text-primary border-primary/10"
+                                className={`border-opacity-50 bg-gradient-to-br ${badgeColors[i % 3]} bg-clip-text text-transparent border-white/20 hover:border-primary/40`}
                               >
                                 {skill}
                               </Badge>

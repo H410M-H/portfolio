@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Home, Briefcase, Code2, Mail } from "lucide-react"
+import { Home, Briefcase, Code2, Mail, BellElectric } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 
@@ -28,6 +28,12 @@ export default function FloatingHeader({ activeSection, onNavigate }: FloatingHe
           active={activeSection === "projects"}
           onClick={onNavigate}
           icon={Briefcase}
+        />
+                <NavButton
+          section="services"
+          active={activeSection === "services"}
+          onClick={onNavigate}
+          icon={BellElectric}
         />
         <NavButton
           section="skills"
