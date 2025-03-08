@@ -31,7 +31,7 @@ export default function ProjectsSection() {
           >
             <ProjectCard
               title="School Web App"
-              description="Modern online store with real-time inventory, AI recommendations, and seamless payment integration"
+              description="Modern school website with real-time updates and parent portal"
               technologies={["Next.js 15", "TypeScript", "Prisma", "trpc"]}
               imageUrl="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741430719/download_nsirue.png"
               githubUrl="https://github.com/H410M-H/msns-home"
@@ -46,10 +46,10 @@ export default function ProjectsSection() {
           >
             <ProjectCard
               title="Learning Management System"
-              description="Collaborative workspace with kanban boards, time tracking, and cross-platform sync"
-              technologies={["React", "Node.js", "WebSockets", "MongoDB"]}
-              imageUrl="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741430719/download_nsirue.png"
-              githubUrl="https://github.com/H410M-H/msns-home"
+              description="Scalable and secure LMS with admin dashboard, student portal, and teacher tools"
+              technologies={["React", "Node.js", "GCP", "PostgreSQL"]}
+              imageUrl="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741438631/Screenshot_2025_03_08-1_f1qerz.jpg"
+              githubUrl="https://github.com/H410M-H/msns-build-2.0"
               liveUrl="https://home-msns.vercel.app/"
             />
           </motion.div>
