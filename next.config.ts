@@ -1,7 +1,20 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/dvvbxrs55/image/upload/**",
+      },
+      // {
+      //   protocol: "https",
+      //   hostname: "storage.googleapis.com",
+      //   pathname: "/**",
+      // },
+    ],
+  },
 };
 
-export default nextConfig;
+export default NextConfig;

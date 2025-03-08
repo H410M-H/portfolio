@@ -1,101 +1,149 @@
-import Image from "next/image";
+"use client"
+
+import { useRef, useState, useEffect, useMemo } from "react"
+import { Canvas } from "@react-three/fiber"
+import { PerspectiveCamera, OrbitControls, ScrollControls } from "@react-three/drei"
+import { motion, useScroll, useTransform } from "framer-motion"
+import GeometricBackground from "@/components/geometric-background"
+import FloatingHeader from "@/components/floating-header"
+import HeroSection from "@/components/hero-section"
+import AboutSection from "@/components/about-section"
+import ProjectsSection from "@/components/projects-section"
+import SkillsSection from "@/components/skills-section"
+import ContactSection from "@/components/contact-section"
+import FooterSection from "@/components/footer-section"
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [activeSection, setActiveSection] = useState("home")
+  const { scrollYProgress } = useScroll()
+  
+  const homeRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  
+  const sectionRefs = useMemo(() => ({
+    home: homeRef,
+    about: aboutRef,
+    projects: projectsRef,
+    skills: skillsRef,
+    contact: contactRef,
+  }), [])
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 5], [1, 0.3])
+
+  const handleNavigate = (section: string) => {
+    sectionRefs[section as keyof typeof sectionRefs].current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    })
+    setActiveSection(section)
+  }
+
+  // Scroll-based section detection
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    // Get current refs from memoized object
+    const currentRefs = Object.values(sectionRefs).map(ref => ref.current)
+
+    currentRefs.forEach(ref => {
+      if (ref) observer.observe(ref)
+    })
+
+    return () => {
+      currentRefs.forEach(ref => {
+        if (ref) observer.unobserve(ref)
+      })
+      observer.disconnect()
+    }
+  }, [sectionRefs]) // Now safe to include in dependencies
+
+  return (
+    <main className="relative min-h-screen">
+      {/* 3D Background with Scroll Controls */}
+      <div className="fixed inset-0 -z-10">
+        <Canvas>
+          <ScrollControls pages={5}>
+            <PerspectiveCamera makeDefault position={[0, 0, 3]} />
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[10, 10, 5]} intensity={1} />
+            <GeometricBackground />
+            <OrbitControls 
+              enableZoom={false}
+              enablePan={false}
+              autoRotate
+              autoRotateSpeed={0.5}
+              maxPolarAngle={Math.PI/2}
+              minPolarAngle={Math.PI/3}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          </ScrollControls>
+        </Canvas>
+      </div>
+
+      {/* Floating Header with Glass Effect */}
+      <FloatingHeader activeSection={activeSection} onNavigate={handleNavigate} />
+
+      {/* Sections with Animated Transitions */}
+      <motion.div 
+        className="relative space-y-24 pb-24"
+        style={{ opacity: backgroundOpacity }}
+      >
+        <motion.section
+          ref={sectionRefs.home}
+          id="home"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="min-h-screen pt-32 px-6"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <HeroSection onNavigate={handleNavigate} />
+        </motion.section>
+
+        <motion.section
+          ref={sectionRefs.about}
+          id="about"
+          className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <AboutSection />
+        </motion.section>
+
+        <motion.section
+          ref={sectionRefs.projects}
+          id="projects"
+          className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+          <ProjectsSection />
+        </motion.section>
+
+        <motion.section
+          ref={sectionRefs.skills}
+          id="skills"
+          className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
+        >
+          <SkillsSection />
+        </motion.section>
+
+        <motion.section
+          ref={sectionRefs.contact}
+          id="contact"
+          className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
+        >
+          <ContactSection />
+        </motion.section>
+      </motion.div>
+
+      <FooterSection />
+    </main>
+  )
 }
