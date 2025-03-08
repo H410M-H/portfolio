@@ -13,6 +13,7 @@ import SkillsSection from "@/components/skills-section"
 import ContactSection from "@/components/contact-section"
 import FooterSection from "@/components/footer-section"
 import EducationSection from "@/components/education"
+import ServicesSection from "@/components/services"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
@@ -21,6 +22,7 @@ export default function Home() {
   const homeRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
@@ -29,6 +31,7 @@ export default function Home() {
     home: homeRef,
     about: aboutRef,
     education: educationRef,
+    services: servicesRef,
     projects: projectsRef,
     skills: skillsRef,
     contact: contactRef,
@@ -123,10 +126,18 @@ export default function Home() {
         
         <motion.section
           ref={sectionRefs.about}
-          id="education"
+          id="about"
           className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
         >
           <EducationSection />
+        </motion.section>
+
+        <motion.section
+          ref={sectionRefs.about}
+          id="about"
+          className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
+        >
+          <ServicesSection />
         </motion.section>
 
         <motion.section
