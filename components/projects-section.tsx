@@ -60,12 +60,12 @@ export default function ProjectsSection() {
             transition={{ delay: 0.6 }}
           >
             <ProjectCard
-              title="AI Content Generator"
-              description="GPT-4 powered content creation studio with multi-language support"
+              title="Product Hunting Tool"
+              description="GPT-4 powered content daraz hunt studio with sales forecasting"
               technologies={["Next.js", "Python", "LLMs", "Redis"]}
-              imageUrl="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741430719/download_nsirue.png"
-              githubUrl="https://github.com/H410M-H/msns-home"
-              liveUrl="https://home-msns.vercel.app/"
+              imageUrl="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741446881/Project_Documentation_qaxvbh.jpg"
+              githubUrl=""
+              liveUrl=""
             />
           </motion.div>
         </div>
