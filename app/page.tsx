@@ -12,6 +12,7 @@ import ProjectsSection from "@/components/projects-section"
 import SkillsSection from "@/components/skills-section"
 import ContactSection from "@/components/contact-section"
 import FooterSection from "@/components/footer-section"
+import EducationSection from "@/components/education"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
@@ -19,6 +20,7 @@ export default function Home() {
   
   const homeRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
+  const educationRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
@@ -26,6 +28,7 @@ export default function Home() {
   const sectionRefs = useMemo(() => ({
     home: homeRef,
     about: aboutRef,
+    education: educationRef,
     projects: projectsRef,
     skills: skillsRef,
     contact: contactRef,
@@ -83,7 +86,7 @@ export default function Home() {
               enableZoom={false}
               enablePan={false}
               autoRotate
-              autoRotateSpeed={0.5}
+              autoRotateSpeed={0.7}
               maxPolarAngle={Math.PI/2}
               minPolarAngle={Math.PI/3}
             />
@@ -116,6 +119,14 @@ export default function Home() {
           className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
         >
           <AboutSection />
+        </motion.section>
+        
+        <motion.section
+          ref={sectionRefs.about}
+          id="education"
+          className="glass-panel max-w-6xl mx-auto p-8 rounded-3xl"
+        >
+          <EducationSection />
         </motion.section>
 
         <motion.section

@@ -91,7 +91,7 @@ export default function AboutSection() {
               </div>
               <div className="flex items-center gap-3 text-indigo-300">
                 <span className="w-2 h-2 bg-current rounded-full" />
-                <span>AWS & Vercel Certified</span>
+                <span>GCP & Vercel Certified</span>
               </div>
             </div>
 
