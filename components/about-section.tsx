@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber"
 import { Float, Environment, OrbitControls } from "@react-three/drei"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
 
 export default function AboutSection() {
   return (
@@ -94,12 +95,14 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* <Button 
-              className="mt-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
-              size="lg"
-            >
-              Download Resume
-            </Button> */}
+            <a href="/resume.pdf" download="Hassaan_Resume.pdf">
+              <Button 
+                className="mt-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+                size="lg"
+              >
+                Download Resume
+              </Button>
+            </a>
           </motion.div>
         </div>
       </div>

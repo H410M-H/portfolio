@@ -47,9 +47,9 @@ export default function ProjectsSection() {
               title="Learning Management System"
               description="Scalable and secure LMS with admin dashboard, student portal, and teacher tools"
               technologies={["React", "Node.js", "GCP", "PostgreSQL"]}
-              imageUrl="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741438631/Screenshot_2025_03_08-1_f1qerz.jpg"
-              githubUrl="https://github.com/H410M-H/msns-build-2.0"
-              liveUrl="https://home-msns.vercel.app/"
+              imageUrl="/msns.png"
+              githubUrl="https://github.com/H410M-H/lms-web"
+              liveUrl="https://lms.msns.edu.pk/"
             />
           </motion.div>
 
@@ -59,12 +59,12 @@ export default function ProjectsSection() {
             transition={{ delay: 0.6 }}
           >
             <ProjectCard
-              title="Product Hunting Tool"
+              title="Emochipk - Product Hunting Tool"
               description="GPT-4 powered content daraz hunt studio with sales forecasting"
               technologies={["Next.js", "Python", "LLMs", "Redis"]}
-              imageUrl="https://res.cloudinary.com/dvvbxrs55/image/upload/v1741446881/Project_Documentation_qaxvbh.jpg"
+              imageUrl="/emochipk.png"
               githubUrl=""
-              liveUrl=""
+              liveUrl="https://emochipk.com/"
             />
           </motion.div>
         </div>

@@ -15,6 +15,29 @@ interface EducationItem {
 export default function EducationSection() {
     const educationItems: EducationItem[] = [
         {
+          degree: "Lead Full Stack Developer",
+          institution: "MSNS-DEV",
+          location: "Remote",
+          period: "2023 - Present",
+          description: "Leading the development of a comprehensive Learning & Revenue Management System.",
+          achievements: [
+            "Architected scalable infrastructure using Next.js, tRPC, Prisma",
+            "Built robust authentication and role-based access control",
+            "Integrated real-time analytics and reporting"
+          ],
+        },
+        {
+          degree: "Product Developer",
+          institution: "Emochipk",
+          location: "Remote",
+          period: "2022 - Present",
+          description: "Developing a GPT-4 powered content and product hunting tool.",
+          achievements: [
+            "Implemented AI-driven product insights and sales forecasting",
+            "Engineered high-performance data processing pipelines with Python and Redis"
+          ],
+        },
+        {
           degree: "Bachelor of Science in Information Technology",
           institution: "University of Gujrat (HH-Campus)",
           location: "Gujrat, Pakistan",
@@ -60,7 +83,7 @@ export default function EducationSection() {
           viewport={{ once: true, margin: "-100px" }}
           className="text-4xl font-bold mb-16 text-center bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent"
         >
-          Education Journey
+          Experience & Education Journey
         </motion.h2>
 
         <motion.div 
