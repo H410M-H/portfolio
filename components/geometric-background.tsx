@@ -23,13 +23,16 @@ export default function GeometricBackground() {
         MathUtils.randFloatSpread(20) - 10
       ),
       rotation: [Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI],
-      scale: Math.random() * 0.8 + 0.2,
+      scale: 1,
+      baseScale: Math.random() * 0.8 + 0.2,
       color: new Color(COLORS[Math.floor(Math.random() * COLORS.length)]),
       shape: Math.floor(Math.random() * 5),
       speed: Math.random() * 0.02 + 0.01,
       direction: Math.random() > 0.5 ? 1 : -1,
       velocity: new Vector3(),
-      phase: Math.random() * Math.PI * 2
+      phase: Math.random() * Math.PI * 2,
+      targetScale: 1,
+      hovered: false
     }))
   }, [viewport])
 
@@ -40,13 +43,16 @@ export default function GeometricBackground() {
   useEffect(() => {
     const handleScroll = () => {
       const nextScrollY = window.scrollY
-      scrollTarget.current = MathUtils.clamp((nextScrollY - lastScrollY.current) * 0.012, -1.4, 1.4)
+      scrollTarget.current = MathUtils.clamp((nextScrollY - lastScrollY.current) * 0.028, -2.4, 2.4)
       lastScrollY.current = nextScrollY
     }
 
     lastScrollY.current = window.scrollY
     window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      document.body.style.cursor = "default"
+    }
   }, [])
 
   // Spring-damped motion makes scroll energy settle naturally instead of stopping abruptly.
@@ -73,15 +79,18 @@ export default function GeometricBackground() {
 
       shapes.forEach((shape) => {
         const force = new Vector3(
-          Math.cos(time * shape.speed + shape.phase) * 0.018 * shape.direction + motionForce * 0.06,
-          Math.sin(time * shape.speed + shape.phase) * 0.018 * shape.direction - motionForce * 0.035,
+          Math.cos(time * shape.speed + shape.phase) * 0.018 * shape.direction + motionForce * 0.14,
+          Math.sin(time * shape.speed + shape.phase) * 0.018 * shape.direction - motionForce * 0.08,
           Math.sin(time * 0.7 + shape.phase) * 0.01
         )
         shape.velocity.add(force.multiplyScalar(frame * 3))
-        shape.velocity.multiplyScalar(Math.pow(0.92, frame * 60))
+        shape.velocity.multiplyScalar(Math.pow(0.88, frame * 60))
         shape.position.addScaledVector(shape.velocity, frame)
-        shape.rotation[0] += shape.velocity.y * frame * 0.35
-        shape.rotation[1] += shape.velocity.x * frame * 0.35
+        shape.targetScale = MathUtils.damp(shape.targetScale, shape.hovered ? 1.18 : 1, 8, frame)
+        shape.scale = MathUtils.damp(shape.scale, shape.baseScale * shape.targetScale, 9, frame)
+        shape.rotation[0] += shape.velocity.y * frame * 0.7
+        shape.rotation[1] += shape.velocity.x * frame * 0.7
+        shape.rotation[2] += (shape.hovered ? 0.35 : 0.08) * frame * shape.direction
       })
     }
   })
@@ -98,6 +107,21 @@ export default function GeometricBackground() {
           position={shape.position}
           rotation={shape.rotation as [number, number, number]}
           scale={shape.scale}
+          onPointerOver={(event) => {
+            event.stopPropagation()
+            shape.hovered = true
+            document.body.style.cursor = "pointer"
+          }}
+          onPointerOut={(event) => {
+            event.stopPropagation()
+            shape.hovered = false
+            document.body.style.cursor = "default"
+          }}
+          onPointerDown={(event) => {
+            event.stopPropagation()
+            shape.velocity.add(new Vector3(event.point.x * 0.12, event.point.y * 0.12, 0.45))
+            shape.targetScale = 1.34
+          }}
         >
           {shape.shape === 0 ? (
             <boxGeometry args={[1, 1, 1]} />
