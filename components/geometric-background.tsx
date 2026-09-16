@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useMemo } from "react"
+import { useRef, useMemo, useEffect } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import { MathUtils, Color, Vector3 } from "three"
 import type * as THREE from "three"
@@ -27,29 +27,61 @@ export default function GeometricBackground() {
       color: new Color(COLORS[Math.floor(Math.random() * COLORS.length)]),
       shape: Math.floor(Math.random() * 5),
       speed: Math.random() * 0.02 + 0.01,
-      direction: Math.random() > 0.5 ? 1 : -1
+      direction: Math.random() > 0.5 ? 1 : -1,
+      velocity: new Vector3(),
+      phase: Math.random() * Math.PI * 2
     }))
   }, [viewport])
 
-  // Animate shapes with mouse interaction and floating effect
-  useFrame(({ mouse, clock }) => {
+  const scrollVelocity = useRef(0)
+  const scrollTarget = useRef(0)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const nextScrollY = window.scrollY
+      scrollTarget.current = MathUtils.clamp((nextScrollY - lastScrollY.current) * 0.012, -1.4, 1.4)
+      lastScrollY.current = nextScrollY
+    }
+
+    lastScrollY.current = window.scrollY
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Spring-damped motion makes scroll energy settle naturally instead of stopping abruptly.
+  useFrame(({ mouse, clock }, delta) => {
     const time = clock.getElapsedTime()
-    
+    const frame = Math.min(delta, 0.05)
+    scrollVelocity.current = MathUtils.damp(scrollVelocity.current, scrollTarget.current, 5, frame)
+    scrollTarget.current = MathUtils.damp(scrollTarget.current, 0, 7, frame)
+    const motionForce = scrollVelocity.current
+
     if (groupRef.current) {
-      groupRef.current.rotation.x = MathUtils.lerp(
+      groupRef.current.rotation.x = MathUtils.damp(
         groupRef.current.rotation.x,
-        mouse.y * 0.2 + Math.sin(time * 0.5) * 0.1,
-        0.05
+        mouse.y * 0.2 + Math.sin(time * 0.5) * 0.1 + motionForce * 0.08,
+        4,
+        frame
       )
-      groupRef.current.rotation.y = MathUtils.lerp(
+      groupRef.current.rotation.y = MathUtils.damp(
         groupRef.current.rotation.y,
-        mouse.x * 0.2 + Math.cos(time * 0.5) * 0.1,
-        0.05
+        mouse.x * 0.2 + Math.cos(time * 0.5) * 0.1 + motionForce * 0.12,
+        4,
+        frame
       )
 
       shapes.forEach((shape) => {
-        shape.position.y += Math.sin(time * shape.speed) * 0.005 * shape.direction
-        shape.position.x += Math.cos(time * shape.speed) * 0.005 * shape.direction
+        const force = new Vector3(
+          Math.cos(time * shape.speed + shape.phase) * 0.018 * shape.direction + motionForce * 0.06,
+          Math.sin(time * shape.speed + shape.phase) * 0.018 * shape.direction - motionForce * 0.035,
+          Math.sin(time * 0.7 + shape.phase) * 0.01
+        )
+        shape.velocity.add(force.multiplyScalar(frame * 3))
+        shape.velocity.multiplyScalar(Math.pow(0.92, frame * 60))
+        shape.position.addScaledVector(shape.velocity, frame)
+        shape.rotation[0] += shape.velocity.y * frame * 0.35
+        shape.rotation[1] += shape.velocity.x * frame * 0.35
       })
     }
   })

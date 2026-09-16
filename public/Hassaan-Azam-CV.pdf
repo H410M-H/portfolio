@@ -1,0 +1,55 @@
+
+
+HASSAAN AZAM
+FULL-STACK DEVELOPER
+Lahore, Pakistan  |  +92 301 6233609  |  hassaanazam7@gmail.com  |  github.com/H410M-H  |  portfolio-msns.vercel.app
+SUMMARY
+Full-stack developer specializing in Next.js, TypeScript, tRPC, Prisma, and PostgreSQL, with end-to-end ownership from 
+database schema design through production deployment. Built and currently maintain live institutional and e-commerce 
+platforms serving real users. Recognized as a Top 5% contributor in the Railway developer community for infrastructure and 
+networking troubleshooting.
+PROFESSIONAL EXPERIENCE
+Full-Stack Developer, M.S. Naz High School (MSNS)[Start Year] – Present
+●  Own the school's full digital ecosystem end-to-end — 
+public website (msns.edu.pk), LMS, and admin tooling — 
+built on Next.js 15, tRPC, Prisma, and PostgreSQL.
+●  Led the LMS upgrade from v1.6 to v2.0 (ERP Edition): 
+authored a 377-requirement SRS and full technical 
+architecture documentation.
+●  Migrated all infrastructure off GCP and Vercel onto 
+Railway Pro, consolidating hosting and file storage (S3-
+compatible bucket, pre-signed URLs).
+●  Built data pipelines converting staff payroll and 
+fee/expense/fund records (12 monthly ledgers) from Excel 
+into structured JSON.
+●  Produced a 50-page institutional prospectus (print-ready 
+PDF) via a custom modular Python publishing pipeline 
+with original photography and SVG diagrams.
+Full-Stack Developer, Executive Mochi (executivemochi.pk)[Start Year] – Present
+●  Design and build the company's e-commerce platform on 
+Next.js, tRPC, Prisma, and PostgreSQL, including a 17-
+model schema across catalog, inventory, and orders.
+●  Authored the product's SRS (v1.0) and structured a 150,000 
+PKR delivery budget across six phases.
+●  Designed a WhatsApp Business Catalog API integration for 
+the platform's shop module.
+●  Deployed the platform on Railway and published it as a 
+public, reusable Railway template (emochipk).
+EDUCATION
+Bachelor of Science, Information Technology, University of Gujrat2020 – 2024
+Gujrat, Pakistan — Focus: Algorithms & System Architecture, minor in Digital Media & Professional Practices
+TECHNICAL SKILLS
+TypeScriptJavaScriptPython
+ReactNext.js 15 (App Router)Tailwind CSS
+Node.jstRPCRESTful API Design
+PostgreSQLPrisma ORMSQL
+Railway (Pro)Google Cloud PlatformVercel
+Cloudflare R2 / S3 StorageCI/CD & GitHub ActionsFlutter (Mobile)
+KEY PROJECTS & COMMUNITY
+●  MSNS Learning Management System / ERP v2.0: github.com/H410M-H/msns-build — live at lms.msns.edu.pk
+●  MSNS School Website: github.com/H410M-H/msns-home — Next.js 15, TypeScript, Prisma, tRPC
+●  Executive Mochi E-Commerce Platform: github.com/MSNS-DEV/emochipk
+●  AI-Powered Product Research Tool (personal): Next.js, Python, GPT-4/LLM integration, Redis — sales-forecasting tool for 
+e-commerce sourcing.
+●  Railway Central Station — Top 5% Contributor, Pro tier: resolve bounty threads on custom-domain persistence, 
+DNS/certificate failures, and performance regressions from networking misconfiguration and stale connection pools.
